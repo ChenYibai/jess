@@ -103,10 +103,6 @@ function control(x, y) {
     $("#bone").empty();
     $("#effect").empty();
     let boardXY = board[x][y];
-    // let srcXY = "../../img/";
-    // if (nam[boardXY[1]][boardXY[2]] == "lyf") srcXY += "lyf.gif";
-    // else srcXY += nam[boardXY[1]][boardXY[2]] + ".png";
-    // document.getElementById("control-img").src = srcXY;
     document.getElementById("control-name").innerHTML = nam[boardXY[1]];
     document.getElementById("control").style.left = String(8 + (Number(y) + 1) * 51) + "px";
     document.getElementById("control").style.top = String(8 + (Number(x) + 1) * 51) + "px";
@@ -231,7 +227,7 @@ function killPiece(x, y) {
   if (bxy[0] == 0) ele.style = pos(bxy[1], 9);
   else ele.style = pos(bxy[1], 10);
   ele.onclick = function () { };
-  reviveList.push([bxy, 5]); // `5` means reviveion after 5 goes
+  reviveList.push([bxy, 5]); // `5` means reviving after 5 goes
 }
 // Display a piece as alive (put it back in the board)
 function revivePiece(i, nx, ny) {
@@ -272,53 +268,27 @@ function go(x, y, nx, ny) {
   }
   else { // Attack another piece
     board[nx][ny][3] -= Math.ceil(attack[board[x][y][1]] * (colorn == 2 || board[nx][ny][2][1] ? 0.5 : 1));
-    // board[x][y][3]--;
     nbxy = board[nx][ny]; bxy = board[x][y];
     if (nbxy[3] <= 0) { // Knock Out
       killPiece(nx, ny);
-      var bonesGain = Math.ceil(nbxy[4] / 2) + (color == 1 || board[x][y][2][0] ? 1 : 0);
+      var bonesGain = nbxy[4] + (color == 1 || board[x][y][2][0] ? 1 : 0);
       tot[bxy[0]] += bonesGain, tot[nbxy[0]] -= nbxy[4]; // Transfer scores
       bxy[4] += bonesGain, nbxy[4] = 0; // Transfer bones
       if (getColor(nx, ny) > 0)
         bxy[2][getColor(nx, ny) - 1] = 10; // Duration of the effect(buff) is 10 goes (5 rounds)
-      // if (killedi == 8) {
-      //     alert("Blue Wins!");
-      //     location.reload();
-      // }
-      // else if (killedii == 8) {
-      //     alert("Red Wins!");
-      //     location.reload();
-      // }
       movePiece(x, y, nx, ny);
       board[x][y] = -1; board[nx][ny] = bxy; changeColor(x, y);
     }
-    else { // Still alive; Knockback
-      var kb = [0, 0];
-      var sign = (x) => (x > 0 ? 1 : (x == 0 ? 0 : -1));
-      kb[0] = sign(nx - x), kb[1] = sign(ny - y);
-      var kbnx = nx + kb[0], kbny = ny + kb[1];
-      if (inBoard(kbnx, kbny) && board[kbnx][kbny] == -1 && !inProducer(kbnx, kbny)) {
-        movePiece(nx, ny, kbnx, kbny);
-        board[kbnx][kbny] = board[nx][ny], board[nx][ny] = -1;
-        changeColor(nx, ny);
-      }
-    }
-    // if (bxy[3] <= 0) {
-    //     if (bxy[0] == 0) document.getElementById("piece"
-    //         + String(Number(bxy[0]) * 16 + Number(bxy[1]))).style = pos(killedi++, 9);
-    //     else document.getElementById("piece"
-    //         + String(Number(bxy[0]) * 16 + Number(bxy[1]))).style = pos(killedii++, 10);
-    //     if (killedi == 8) {
-    //         alert("Blue Wins!");
-    //         location.reload();
-    //     }
-    //     else if (killedii == 8) {
-    //         alert("Red Wins!");
-    //         location.reload();
-    //     }
-    //     document.getElementById("piece"
-    //         + String(Number(bxy[0]) * 16 + Number(bxy[1]))).onclick = function () { };
-    //     board[x][y] = -1;
+    // else { // Still alive; Knockback
+    //   var kb = [0, 0];
+    //   var sign = (x) => (x > 0 ? 1 : (x == 0 ? 0 : -1));
+    //   kb[0] = sign(nx - x), kb[1] = sign(ny - y);
+    //   var kbnx = nx + kb[0], kbny = ny + kb[1];
+    //   if (inBoard(kbnx, kbny) && board[kbnx][kbny] == -1 && !inProducer(kbnx, kbny)) {
+    //     movePiece(nx, ny, kbnx, kbny);
+    //     board[kbnx][kbny] = board[nx][ny], board[nx][ny] = -1;
+    //     changeColor(nx, ny);
+    //   }
     // }
   }
 

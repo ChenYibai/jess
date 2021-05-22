@@ -148,14 +148,15 @@
 </head>
 
 <body>
-  <div style="font-size:200%;position:fixed;top:5px;right:8px">
-    <span id="red-score" style="color:red">0</span> :
-    <span id="blue-score" style="color:blue">0</span>
+  <div style="display:inline-block">
+    <table>
+      <tbody id="board"></tbody>
+    </table>
+    <div style="font-size:200%;width:100%;text-align:center;">
+      <span id="red-score" style="color:red">0</span> :
+      <span id="blue-score" style="color:blue">0</span>
+    </div>
   </div>
-
-  <table>
-    <tbody id="board"></tbody>
-  </table>
 
   <div class="card" id="control">
     <!-- <img id="control-img" src="../../img/lyf.gif" style="height: 100px;"><br> -->
@@ -200,8 +201,7 @@
       <b>The goal of the game is to collect bones (stolen from Eddie's bowl).</b> The player who first collects 8 bones
       win.<br>
       The four squares in the center of the board is the bone producer. It will produce a bone every 5 goes. You can
-      also gain bones by eating pieces. The eaten piece will drop <b>half of</b> its bones and will revive after 5
-      goes.<br>
+      also gain bones by eating pieces. The eaten piece will drop all of its bones and will revive after 5 goes.<br>
       <h5>Squares and Effects</h5>
       Pieces can get the effect associated to the color of the square it is currently standing on:<br>
       <div class="little-square" style="background: #faa;"></div>
@@ -211,8 +211,7 @@
       <div class="little-square" style="background: #fff;"></div>
       = no effect<br>
       When you eat a piece, you can get the effect the eaten piece had for 5 rounds (regardless of the color of the
-      square you are standing on). If you attack a piece and it hasn't been knocked out yet, it will be knocked
-      back.<br>
+      square you are standing on).<br>
       <h5>Moving rules</h5>
       <ul>
         <li>姚: Move freely in the row or column.</li>
@@ -220,7 +219,7 @@
         <li>马: Same as the knight in chess.</li>
         <li>贾: Move one square horizontally or vertically. It can also move next to either 华 of its own side.</li>
         <li>猴: Move to any square within a distance of 2 (Manhattan distance)</li>
-        <li>Nobody can step onto the bone producer, but you can go through it.</li>
+        <li>Nobody can step into the bone producer, but you can go through it.</li>
       </ul>
     </div>
   </div>
